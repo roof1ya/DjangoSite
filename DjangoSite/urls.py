@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    #    path('admin/', admin.site.urls),
-]
+       path('admin/', admin.site.urls, name='admin'),
+       path('home/', views.home, name='home'),
+       path('product/(<int:product_id>\w+)/', views.product, name='product'),
+       path('basket_adding/', views.basket_adding, name='basket_adding'),
+       path('checkout/', views.checkout, name='checkout'),
+       path('', views.home, name='home'),
+] \
+       + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+       + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
