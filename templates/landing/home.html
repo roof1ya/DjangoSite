@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="section-top">
+        <img alt="slider" src="{% static 'static_dev/img/slider0.png' %}" class="img-responsive">
+    </div>
+    <div class="section section1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="text-center">
+                        Новые поступления
+                    </h1>
+                </div>
+                {% for product_image in products_images %}
+                    {% include 'landing/product_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="section section-delivery">
+        <div>
+            <h3>О Нас</h3>
+            <h3>
+                В магазине "КРАФТ" вы можете найти широкий выбор уникальных сортов крафтового пива, включая как классические, так и эксклюзивные новинки.
+                Среди них могут быть такие популярные сорта, как индийский пэйл эль (IPA), американский пэйл эль (APA), кислый эль (Sour Ale), стауты,
+                в том числе русский имперский стаут, а также портеры с их характерной горечью и насыщенным вкусом.
+            </h3>
+        </div>
+    </div>
+    <div class="section section2 phones-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="text-center">
+                        Светлое пиво
+                    </h1>
+                </div>
+                {% for product_image in products_images_phones %}
+                    {% include 'landing/product_item.html' %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <div class="section section3 laptops-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="text-center">
+                        Темное пиво
+                    </h1>
+                </div>
+                {% for product_image in products_images_laptops %}
+                    {% include 'landing/product_item.html' %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

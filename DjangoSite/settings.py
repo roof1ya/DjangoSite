@@ -25,17 +25,24 @@ SECRET_KEY = 'django-insecure-9@9x+0h(=k0@)6ug#ajiti683h**wu%-om64l!bnv24u(m0t_-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '13.82.5.83'
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'DjangoSite.apps.DjangoSiteConfig'
 ]
 
 MIDDLEWARE = [
@@ -62,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'DjangoSite.context_processors.getting_basket_info'
             ],
         },
     },
@@ -75,8 +84,12 @@ WSGI_APPLICATION = 'DjangoSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+		'NAME': 'postgres',
+		'HOST': '192.168.222.134',
+		'PORT': 5432,
+		'USER': 'roof1yapguser',
+		'PASSWORD': 'qazwsx'
     }
 }
 
@@ -119,5 +132,9 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
