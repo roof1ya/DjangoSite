@@ -5,10 +5,11 @@ from .forms import CheckoutContactForm
 from django.contrib.auth.models import User
 
 def home(request):
-    return render(request, 'landing/home.html')
+    products_images = ProductImage.objects.filter(is_active=True, is_main=True)
+    return render(request, 'landing/home.html', {'products_images': products_images})
 
 def product(request, product_id):
-    product = Product.objects.get(id=product_id)
+    product1 = Product.objects.get(id=product_id)
 
 
     session_key = request.session.session_key
@@ -16,9 +17,10 @@ def product(request, product_id):
         request.session.cycle_key()
 
     print(request.session.session_key)
+    # print(product1)
 
 
-    return render(request, 'products/product.html', locals())
+    return render(request, 'products/product.html', {'product1': product1})
 
 def basket_adding(request):
     return_dict = dict()

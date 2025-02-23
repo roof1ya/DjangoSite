@@ -1,7 +1,8 @@
+{% load static %}
 <div class="col-lg-3">
     <div class="product-item">
         <div>
-            <a href="{% url 'product' product_image.product.id %}">
+            <a href={% url 'product' product_image.product.id %}>
                 <img src="{{ product_image.image.url }}" class="img-responsive">
             </a>
         </div>
@@ -17,10 +18,15 @@
             {{ product_image.product.description|truncatechars_html:70 }}
         </p>
         <div>
-            {{ product_image.product.price }} UAH
+            {{ product_image.product.price }} ₽
         </div>
         <div class="add-to-card-btn">
-            <button class="btn btn-success">
+            <button type="submit" id="submit_btn" class="btn btn-success btn-buy"
+                data-product_id = "{{ product1.id }}"
+                data-name ="{{ product1.name }}"
+                data-price ="{{ product1.price }}"
+                data-nmb= "1"
+            >
                 Добавить в корзину
             </button>
         </div>

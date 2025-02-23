@@ -45,12 +45,13 @@ html, body{
 
 .product-item{
     height: 360px;
-    background-color: white;
+    background-color: #979595;
     border: 1px solid lightgrey;
     position: relative;
     padding: 10px 0 10px 0;
     text-align: center;
     margin-bottom: 10px;
+    color: black;
 }
 
 .add-to-card-btn{

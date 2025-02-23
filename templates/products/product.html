@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                {% for image_item in product.productimage_set.all %}
+                {% for image_item in product1.productimage_set.all %}
                     <div class="product-image-item">
                         <img src="{{ image_item.image.url }}" class="img-responsive">
                     </div>
@@ -14,11 +14,11 @@
             </div>
             <div class="col-lg-6">
                 <h1 class="text-center">
-                    {{ product.name }}
+                    {{ product1.name }}
                 </h1>
                 <div class="">
                     <p>
-                        Price: {{ product.price }}
+                        Price: {{ product1.price }}
                     </p>
                 </div>
                 <div>
@@ -41,7 +41,7 @@
                       <!-- Tab panes -->
                       <div class="tab-content product-description-tabs">
                         <div role="tabpanel" class="tab-pane active" id="description">
-                            {{ product.description }}
+                            {{ product1.description }}
                         </div>
                         <div role="tabpanel" class="tab-pane" id="delivery">
                             <h3>Как мы делаем доставку</h3>
@@ -59,9 +59,9 @@
 
                             <div class="form-group">
                                 <button type="submit" id="submit_btn" class="btn btn-success btn-buy"
-                                    data-product_id = "{{ product.id }}"
-                                    data-name ="{{ product.name }}"
-                                    data-price ="{{ product.price }}"
+                                    data-product_id = "{{ product1.id }}"
+                                    data-name ="{{ product1.name }}"
+                                    data-price ="{{ product1.price }}"
                                 >
                                     Купить
                                 </button>
