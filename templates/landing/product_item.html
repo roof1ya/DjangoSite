@@ -22,11 +22,11 @@
         </div>
         <div class="add-to-card-btn">
             <button type="submit" id="submit_btn" class="btn btn-success btn-buy"
-                data-product_id = "{{ product1.id }}"
-                data-name ="{{ product1.name }}"
-                data-price ="{{ product1.price }}"
-                data-nmb= "1"
-            >
+                data-product_id="{{ product_image.product.id }}"
+                data-name="{{ product_image.product.name }}"
+                data-price="{{ product_image.product.price }}"
+                data-nmb="1"
+            >{% csrf_token %}
                 Добавить в корзину
             </button>
         </div>

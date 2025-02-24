@@ -4,6 +4,9 @@ html, body{
     font-family: 'Roboto', sans-serif;
     background-color: #5c5c5b;
     color: white;
+    background-image: url('/static/static_dev/img/background-main.png');
+    background-size: cover; /* Растягивает изображение, сохраняя пропорции */
+    background-position: center; /* Центрирует изображение */
 }
 
 .navbar{
@@ -116,4 +119,11 @@ html, body{
 
 .form-error{
     color: red;
+}
+
+.img-responsive{
+    width: 100vw;  /* Растягиваем на всю ширину экрана */
+    max-height: 400px; /* Ограничение по высоте */
+    object-fit: cover; /* Не обрезает, а сжимает */
+    background-color: #000; /* Задай цвет фона, если изображение меньше */
 }
