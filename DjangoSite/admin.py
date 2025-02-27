@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import path
+from django.shortcuts import render
 from .models import *
 
 
@@ -52,8 +54,12 @@ class OrderAdmin (admin.ModelAdmin):
     list_display = [field.name for field in Order._meta.fields]
     inlines = [ProductInOrderInline]
 
+
     class Meta:
         model = Order
+
+    class Media:
+        js = ("static_dev/js/admin.js",)  # Путь относительно `static/`
 
 admin.site.register(Order, OrderAdmin)
 

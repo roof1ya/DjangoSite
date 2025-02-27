@@ -2,6 +2,11 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from utils.main import disable_for_loaddata
+from django.dispatch import receiver
+from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
+from datetime import timedelta
 
 #Products---------------------------------------------------------------------------
 
@@ -18,8 +23,8 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=64, blank=True, null=True, default=None)
     is_active = models.BooleanField(default=True)
 
-    # def __str__(self):
-    #     return "%s" % self.name
+    def __str__(self):
+        return "%s" % self.name
 
     class Meta:
         verbose_name = 'Категория товара'
@@ -39,8 +44,8 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    # def __str__(self):
-    #     return "%s, %s" % (self.price, self.name)
+    def __str__(self):
+        return "%s, %s" % (self.price, self.name)
 
     class Meta:
         verbose_name = 'Товар'
@@ -55,8 +60,8 @@ class ProductImage(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    # def __str__(self):
-    #     return "%s" % self.id
+    def __str__(self):
+        return "%s" % self.id
 
     class Meta:
         verbose_name = 'Фотография'
@@ -70,8 +75,8 @@ class Status(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    # def __str__(self):
-    #     return "Статус %s" % self.name
+    def __str__(self):
+        return "Статус %s" % self.name
 
     class Meta:
         verbose_name = 'Статус заказа'
@@ -79,9 +84,9 @@ class Status(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.SET_NULL)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)#total price for all products in order
     customer_name = models.CharField(max_length=64, blank=True, null=True, default=None)
+    customer_surname = models.CharField(max_length=64, blank=True, null=True, default=None)
     customer_email = models.EmailField(blank=True, null=True, default=None)
     customer_phone = models.CharField(max_length=48, blank=True, null=True, default=None)
     customer_address = models.CharField(max_length=128, blank=True, null=True, default=None)
@@ -89,18 +94,58 @@ class Order(models.Model):
     status = models.ForeignKey(Status, default=1, on_delete=models.SET_DEFAULT)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    status_changed = models.BooleanField(default=False)
+    change_status_at = models.DateTimeField(null=True, blank=True)
+
+    def set_status_change_time(self, hours=1):
+        """
+        Метод для установки времени, когда статус должен быть изменен
+        """
+        self.change_status_at = timezone.now() + timedelta(hours=hours)
+        self.save()
 
 
-    # def __str__(self):
-    #     return "Заказ %s %s" % (self.id, self.status.name)
+    def __str__(self):
+        return "Заказ %s %s" % (self.id, self.status.name)
 
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
     def save(self, *args, **kwargs):
-
+        if not self.change_status_at:  # Если время еще не установлено
+            self.set_status_change_time()  # По умолчанию через 1 час
         super(Order, self).save(*args, **kwargs)
+
+@receiver(post_save, sender=Order)
+def send_status_update_email(sender, instance, created, **kwargs):
+    # Если заказ был обновлен, а не только создан
+    if not created:
+        # Проверяем, изменился ли статус на нужный
+        if instance.status and instance.status.name == "ready" and not instance.status_changed:
+            if instance.email:
+                # Отправляем письмо
+                send_mail(
+                    subject=f"Ваш заказ #{instance.id} готов к оплате на кассе",
+                    message=f"Здравствуйте! Ваш заказ #{instance.id} готов к оплате на кассе.",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[instance.email],
+                    fail_silently=False,
+                )
+
+            # Устанавливаем флаг, чтобы не зациклить процесс
+            instance.status_changed = True
+            instance.save()
+
+            # Проверяем, пришло ли время менять статус
+            if instance.change_status_at and timezone.now() >= instance.change_status_at:
+                # Меняем статус на следующий
+                new_status = Status.objects.get(name="archived")
+                instance.status = new_status
+                instance.save()
+
+                # Устанавливаем новое время для следующей смены статуса
+                instance.set_status_change_time(hours=1)  # Например, следующее изменение через 1 час
 
 
 class ProductInOrder(models.Model):
@@ -113,8 +158,8 @@ class ProductInOrder(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    # def __str__(self):
-    #     return "%s" % self.product.name
+    def __str__(self):
+        return "%s" % self.product.name
 
     class Meta:
         verbose_name = 'Товар в заказе'
@@ -158,8 +203,8 @@ class ProductInBasket(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-    # def __str__(self):
-    #     return "%s" % self.product.name
+    def __str__(self):
+        return "%s" % self.product.name
 
     class Meta:
         verbose_name = 'Товар в корзине'

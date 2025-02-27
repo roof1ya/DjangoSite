@@ -28,7 +28,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '13.82.5.83',
-    '192.168.222.134'
+    '192.168.222.134',
+    '192.168.0.11'
 ]
 
 
@@ -144,3 +145,11 @@ STATIC_ROOT = BASE_DIR / 'static' / 'static_prod'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'static' / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP-сервер Gmail
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'  # Твой email
+EMAIL_HOST_PASSWORD = 'your_password'  # Пароль или App Password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Почта, с которой будут отправляться письма

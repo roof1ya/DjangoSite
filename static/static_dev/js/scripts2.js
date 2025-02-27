@@ -1,27 +1,4 @@
 $(document).ready(function(){
-    var form = $('#form_buying_product');
-    console.log(form);
-
-    // Маска для телефона
-    $('input[type="tel"]').inputmask("+7 (999) 999-99-99");
-
-    // Валидация email
-    $('input[type="email"]').inputmask({
-        alias: "email"
-    });
-
-    $('#shopToggle').change(function() {
-        let shop_id = $(this).is(':checked') ? 2 : 1; // Определяем магазин
-        $.ajax({
-            url: "{% url 'change_shop' %}", // Делаем AJAX-запрос
-            type: "POST",
-            data: { shop_id: shop_id, csrfmiddlewaretoken: '{{ csrf_token }}' },
-            success: function(response) {
-                location.reload(); // Обновляем страницу, чтобы обновился ассортимент
-            }
-        });
-    });
-
 
     function basketUpdating(product_id, nmb, is_delete){
         var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();  // Получаем CSRF-токен глобально
@@ -34,8 +11,6 @@ $(document).ready(function(){
         if (is_delete){
             data["is_delete"] = true;
         }
-
-        console.log(data)
 
         $.ajax({
             url: "/basket_adding/",  // Указываем URL вручную, а не из формы
@@ -60,43 +35,31 @@ $(document).ready(function(){
 
     $(document).on('click', '.btn-buy', function(e){
         e.preventDefault();  // Отменяем стандартное поведение кнопки
-
+    
         var product_id = $(this).data("product_id");
         var name = $(this).data("name");
         var price = $(this).data("price");
         var nmb = $(this).data("nmb") || 1;  // Если data-nmb не указано, ставим 1
-
+    
         basketUpdating(product_id, nmb, false);  // Вызываем функцию добавления в корзину
     });
 
-    function showingBasket() {
-    $('.basket-items').removeClass('hidden');
-    }
+    function showingBasket(){
+        $('.basket-items').removeClass('hidden');
+    };
 
-    function hidingBasket() {
-    setTimeout(function() {
-        if (!$('.basket-container:hover').length && !$('.basket-items:hover').length) {
-            $('.basket-items').addClass('hidden');
-        }
-    }, 100); // Задержка, чтобы дать время на переход
-    }
+    //$('.basket-container').on('click', function(e){
+    //    e.preventDefault();
+    //    showingBasket();
+    //});
 
-    // Открываем корзину при наведении
-    $('.basket-container').on('mouseenter', function() {
-    showingBasket();
-    });
+     $('.basket-container').mouseover(function(){
+         showingBasket();
+     });
 
-    // Закрываем корзину, когда мышь уходит
-    $('.basket-container, .basket-items').on('mouseleave', function() {
-    hidingBasket();
-    });
-
-    // Если кликнули вне корзины — закрываем
-    $(document).click(function(event) {
-        if (!$(event.target).closest('.basket-container').length) {
-            hidingBasket();
-        }
-    });
+     //$('.basket-container').mouseout(function(){
+     //    showingBasket();
+     //});
 
      $(document).on('click', '.delete-item', function(e){
          e.preventDefault();

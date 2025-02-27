@@ -47,19 +47,33 @@ html, body{
 }
 
 .product-item{
-    height: 360px;
+    height: 450px;
     background-color: #979595;
-    border: 1px solid lightgrey;
+    border: 2px solid #4c4c4c;
+    border-radius: 10px;
     position: relative;
-    padding: 10px 0 10px 0;
+    padding: 0 0 10px 0;
     text-align: center;
     margin-bottom: 10px;
     color: black;
 }
 
+.product-item img{
+    height: 250px;
+    background-color: #9a9696;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    position: relative;
+    padding: 0 0 0 0;
+    text-align: center;
+    margin-bottom: 10px;
+    color: black;
+    object-fit: cover;
+}
+
 .add-to-card-btn{
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -104,8 +118,8 @@ html, body{
 
 .basket-container{
     position: relative;
-    width: 400px;
-    padding: 15px 10px;
+    width: 450px;
+    padding: 18px 10px 0 10px;
 }
 
 .basket-items{
@@ -115,6 +129,8 @@ html, body{
     background-color: #555555;
     z-index: 10;
     padding: 10px;
+    border: 2px solid #4c4c4c;
+    border-radius: 10px;
 }
 
 .form-error{
@@ -126,4 +142,96 @@ html, body{
     max-height: 400px; /* Ограничение по высоте */
     object-fit: cover; /* Не обрезает, а сжимает */
     background-color: #000; /* Задай цвет фона, если изображение меньше */
+}
+
+.shop-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 200px 0 50px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.form-control{
+    background: #333;
+    color: #fff;
+}
+
+.product-in-basket-nmb{
+    background: #333;
+    color: #fff;
+}
+
+.dltbutton{
+    width: 20px;
+    height: 20px;
+    border: 1px black;
+    border-radius: 1px;
+    right: 25px;
+    position: absolute;
+}
+
+.cart-button {
+    background-color: #5cb85c; /* Цвет, как у других кнопок */
+    color: black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.cart-button:hover {
+    background-color: #293c29; /* Темнее при наведении */
+    text-decoration: none;
+    color: white;
+}
+
+.item-row{
+    border: 2px solid #232323;
+    border-radius: 5px;
+    padding: 5px 5px 5px 5px;
+    margin: 5px;
 }

@@ -100,3 +100,8 @@ footer {
 footer .contacts p {
     margin: 5px 0;
 }
+
+.form-control{
+    background: #333;
+    color: #fff;
+}

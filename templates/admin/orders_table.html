@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table class="model-order">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Статус</th>
+            <th>Клиент</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.customer_name }}</td>
+            <td>{{ order.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
