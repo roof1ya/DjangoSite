@@ -15,7 +15,13 @@
 
         <h4>{{ product_image.product.name }}</h4>
         <p>
-            {{ product_image.product.description|truncatechars_html:70 }}
+            {{ product_image.product.short_description }}
+        </p>
+        <p>
+            ABV {{ product_image.product.alcohol }} %
+        </p>
+        <p>
+            IBU {{ product_image.product.IBU }}
         </p>
         <div>
             {{ product_image.product.price }} ₽

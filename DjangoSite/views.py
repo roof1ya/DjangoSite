@@ -112,7 +112,10 @@ def checkout(request):
                         order=order
                     )
 
-            # 🔹 Очистка корзины после переноса товаров в заказ
+            print()
+            print(f'sessia - {request.session}')
+
+            # Очистка корзины после переноса товаров в заказ
             request.session.pop('current_order_id', None)
             request.session.modified = True
 

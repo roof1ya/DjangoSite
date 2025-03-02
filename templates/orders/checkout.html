@@ -8,7 +8,6 @@
             {% if products_in_basket %}
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2 class="text-center">Оформление заказа</h2>
-{#                    <h3 class="text-center">Общая стоимость </h3>#}
                             {{ request.session.basket.products }}
 
                     <form class="form-horizontal" method="post">{% csrf_token %}
@@ -73,7 +72,7 @@
                                         </td>
                                         <td>
                                              <input value="{{ product_in_basket.nmb }}" type="number"
-                                                    class="form-control" name="product_in_basket_{{ product_in_basket.id }}">
+                                                    class="form-control product-in-basket-nmb" name="product_in_basket_{{ product_in_basket.id }}">
                                         </td>
                                         <td>
                                             <span class="product-price">
