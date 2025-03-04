@@ -97,12 +97,7 @@ class Order(models.Model):
     status_changed = models.BooleanField(default=False)
     change_status_at = models.DateTimeField(null=True, blank=True)
 
-    def set_status_change_time(self, hours=1):
-        """
-        Метод для установки времени, когда статус должен быть изменен
-        """
-        self.change_status_at = timezone.now() + timedelta(hours=hours)
-        self.save()
+
 
 
     def __str__(self):
@@ -111,41 +106,6 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
-
-    def save(self, *args, **kwargs):
-        if not self.change_status_at:  # Если время еще не установлено
-            self.set_status_change_time()  # По умолчанию через 1 час
-        super(Order, self).save(*args, **kwargs)
-
-@receiver(post_save, sender=Order)
-def send_status_update_email(sender, instance, created, **kwargs):
-    # Если заказ был обновлен, а не только создан
-    if not created:
-        # Проверяем, изменился ли статус на нужный
-        if instance.status and instance.status.name == "ready" and not instance.status_changed:
-            if instance.email:
-                # Отправляем письмо
-                send_mail(
-                    subject=f"Ваш заказ #{instance.id} готов к оплате на кассе",
-                    message=f"Здравствуйте! Ваш заказ #{instance.id} готов к оплате на кассе.",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[instance.email],
-                    fail_silently=False,
-                )
-
-            # Устанавливаем флаг, чтобы не зациклить процесс
-            instance.status_changed = True
-            instance.save()
-
-            # Проверяем, пришло ли время менять статус
-            if instance.change_status_at and timezone.now() >= instance.change_status_at:
-                # Меняем статус на следующий
-                new_status = Status.objects.get(name="archived")
-                instance.status = new_status
-                instance.save()
-
-                # Устанавливаем новое время для следующей смены статуса
-                instance.set_status_change_time(hours=1)  # Например, следующее изменение через 1 час
 
 
 class ProductInOrder(models.Model):

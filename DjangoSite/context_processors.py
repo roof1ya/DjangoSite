@@ -14,3 +14,5 @@ def getting_basket_info(request):
     products_total_nmb = products_in_basket.count()
 
     return locals()
+
+

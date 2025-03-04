@@ -1,3 +1,7 @@
+
+
+
+
 from django import forms
 from .models import *
 
@@ -7,3 +11,6 @@ class CheckoutContactForm(forms.Form):
     phone = forms.CharField(required=True)
     surname = forms.CharField(required=True)
     email = forms.EmailField(required=True)
+
+
+

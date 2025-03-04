@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+                <h3 class="text-center">Ваш заказ успешно оформлен</h3>
+        </div>
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Количество (л.)</th>
+                    <th>Цена за еденицу (₽)</th>
+                    <th>Общая цена (₽)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_in_basket in products_in_basket %}
+                    <tr>
+                        <td>
+                            <h4>
+                             {{ product_in_basket.product.name }}
+                            </h4>
+                        </td>
+                        <td>
+                             <input value="{{ product_in_basket.nmb }}" type="number"
+                                    class="form-control product-in-basket-nmb" name="product_in_basket_{{ product_in_basket.id }}">
+                        </td>
+                        <td>
+                            <span class="product-price">
+                                <h4>
+                                {{ product_in_basket.price_per_item}}
+                                </h4>
+                            </span>
+                        </td>
+                        <td>
+                            <h4>
+                            <span class="total-product-in-basket-amount">
+                                {{ product_in_basket.total_price }}
+                            </span>
+                            </h4>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

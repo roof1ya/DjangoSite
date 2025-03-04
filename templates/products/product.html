@@ -13,12 +13,14 @@
                 {% endfor %}
             </div>
             <div class="col-lg-6">
-                <h1 class="text-center">
+                <h1 class="text-center brdtext">
                     {{ product1.name }}
                 </h1>
                 <div class="">
                     <p>
-                        Price: {{ product1.price }}
+                        <h3 class="brdtext">
+                            ЦЕНА: {{ product1.price }}
+                        </h3>
                     </p>
                 </div>
                 <div>
@@ -26,22 +28,28 @@
                       <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
                             <a href="#description" aria-controls="home" role="tab" data-toggle="tab">
-                                Описание
+                                ОПИСАНИЕ
                             </a>
                         </li>
 
-                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Отзывы</a></li>
+                        <li role="presentation">
+                            <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                                ОТЗЫВЫ
+                            </a>
+                        </li>
                       </ul>
 
                       <!-- Tab panes -->
                       <div class="tab-content product-description-tabs">
-                        <div role="tabpanel" class="tab-pane active" id="description">
-                            {{ product1.description }}
+                        <div role="tabpanel" class="tab-pane active proddesc" id="description">
+                            <h3>
+                                {{ product1.description }}
+                            </h3>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="delivery">
+                        <div role="tabpanel" class="tab-pane" id="messages">
                             <h3>Как мы делаем доставку</h3>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+<!--                        <div role="tabpanel" class="tab-pane" id="messages">...</div>-->
                         <div role="tabpanel" class="tab-pane" id="settings">...</div>
                       </div>
                 </div>
@@ -58,7 +66,7 @@
                                     data-name ="{{ product1.name }}"
                                     data-price ="{{ product1.price }}"
                                 >
-                                    Купить
+                                    Добавить в корзину
                                 </button>
                             </div>
 

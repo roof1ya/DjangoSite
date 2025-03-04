@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="brdtext weonmap">
+                    <p>
+                        <h2 class="text-center">
+                            МЫ НА КАРТЕ
+                        </h2>
+                    </p>
+
+        </div>
+        <div class="row">
+            <div class="mapcontainer">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f7ca22041b78e815e1b24db8fa4b584767bcafdc034550ba90f1f2d1235c92d&amp;source=constructor"></iframe>
+            </div>
+        </div>
+        <div class="brdtext weonmap">
+                    <p>
+                        <h4 class="text-center">
+                            Вы всегда можете найти наши заведения на интерактивной карте.
+                        </h4>
+                    </p>
+
+        </div>
+    </div>
+{% endblock %}

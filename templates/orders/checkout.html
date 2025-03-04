@@ -7,10 +7,10 @@
         <div class="row">
             {% if products_in_basket %}
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2 class="text-center">Оформление заказа</h2>
+                    <h2 class="text-center brdtext">Оформление заказа</h2>
                             {{ request.session.basket.products }}
 
-                    <form class="form-horizontal" method="post">{% csrf_token %}
+                    <form class="form-horizontal jstbrd" method="post">{% csrf_token %}
 
                             <div class="form-group">
                                 <div class="col-lg-4">
@@ -94,12 +94,21 @@
                         </table>
 
                         <div class="text-right">
-                            <b>Сумма заказа: </b> <span id="total_order_amount">54</span>
+                           <h3> <b> Сумма заказа:</b> <span id="total_order_amount" class="brdtext2">54</span></h3>
                         </div>
 
                         <hr>
 
                         <div class="text-right">
+                            <p>
+                                <h4>
+                                    Мне исполнилось 18 лет <label class="switch">
+                                                                <input type="checkbox" id="ageconfirm">
+                                                                <span class="slider round"></span>
+                                                           </label>
+                                </h4>
+
+                            </p>
                             <button type="submit" class="btn btn-primary btn-lg">Заказать</button>
                         </div>
 
